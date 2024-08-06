@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.bakdata.avro' version '1.4.0'
+}
+
+group = 'com.banking'
+version = '0.0.1-SNAPSHOT'
+
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.3.2'
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
+
+	implementation 'org.slf4j:slf4j-api:2.0.0'
+	implementation 'org.slf4j:slf4j-simple:2.0.0'
+
+	//implementation 'io.confluent:kafka-avro-serializer:7.3.0'
+	implementation 'org.apache.avro:avro:1.11.1'
+	implementation 'com.bakdata.gradle:avro:1.4.0'
+
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.springframework.integration:spring-integration-kafka'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
+	implementation 'org.springframework.integration:spring-integration-core'
+	// https://mvnrepository.com/artifact/io.micrometer/micrometer-core
+	implementation group: 'io.micrometer', name: 'micrometer-core', version: '1.0.0'
+// https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
+	implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.13.2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir file('build/generated-main-avro-java')
+		}
+	}
+}
+
+bootJar {
+	archiveBaseName = 'rtccts'
+	archiveVersion = '0.0.1-SNAPSHOT'
+}

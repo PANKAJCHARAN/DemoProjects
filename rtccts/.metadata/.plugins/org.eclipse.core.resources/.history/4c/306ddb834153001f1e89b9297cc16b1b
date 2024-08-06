@@ -1,0 +1,5 @@
+package com.banking.rtccts.config;
+
+public class KafkaProducerConfig {
+
+}

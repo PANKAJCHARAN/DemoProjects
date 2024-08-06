@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "Transaction",
+  "namespace": "com.rtccts",
+  "fields": [
+    {"name": "transactionId", "type": "long"},
+    {"name": "cardNumber", "type": "int"},
+    {"name": "amount", "type": "double"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "merchantId", "type": "string"}
+  ]
+}
