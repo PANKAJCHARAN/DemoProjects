@@ -7,6 +7,7 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import java.util.Random;
 public class KafkaProducerService {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
+
+    @Value("${kafka.topics.main-topic}")
+    private String topicName;
 
     @Autowired
     KafkaTemplate<String, Transaction> kafkaTemplate;
@@ -33,7 +37,7 @@ public class KafkaProducerService {
         Timer.Sample sample = Timer.start(meterRegistry);
         try{
             Transaction cardTransaction = getRandomMessage();
-            this.kafkaTemplate.send("abc", cardTransaction);
+            this.kafkaTemplate.send(topicName, cardTransaction);
             logger.info("Message published successfully to kafka topic: {}", cardTransaction);
         }catch(Exception e){
             logger.error("Message publish failed");

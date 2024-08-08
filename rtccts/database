@@ -1,0 +1,26 @@
+CREATE TABLE credit_card (
+    card_id SERIAL PRIMARY KEY,
+    card_number VARCHAR(16) UNIQUE NOT NULL,
+    expiry_date DATE NOT NULL,
+    customer_name VARCHAR(100) NOT NULL
+    card_limit DECIMAL(10, 2) NOT NULL,
+    transaction_limit DECIMAL(10, 2) NOT NULL,
+);
+
+CREATE TABLE card_transactions (
+    transaction_id SERIAL PRIMARY KEY,
+    card_id INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    merchantId VARCHAR(20) NOT NULL,
+    FOREIGN KEY (card_id) REFERENCES credit_card(card_id)
+);
+
+CREATE TABLE auth_log (
+    auth_id SERIAL PRIMARY KEY,
+    card_id INT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    FOREIGN KEY (card_id) REFERENCES credit_card(card_id)
+);

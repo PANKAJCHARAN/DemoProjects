@@ -10,6 +10,7 @@ public class CardTransactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id")
     private Long transactionId;
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
@@ -21,6 +22,4 @@ public class CardTransactions {
     @Column(name = "merchant_id", nullable = false)
     private String merchantId;
 
-    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
-    private CardAuthLog auth;
 }

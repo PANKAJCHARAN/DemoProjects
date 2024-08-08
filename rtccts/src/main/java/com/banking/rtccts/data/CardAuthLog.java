@@ -3,6 +3,8 @@ package com.banking.rtccts.data;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.security.Timestamp;
+
 @Data
 @Entity
 @Table(name = "auth_log")
@@ -12,10 +14,11 @@ public class CardAuthLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auth_id")
     private Long authId;
-    @Column(name = "card_number", unique = true, nullable = false)
-    private int cardNumber;
-    @Column(name = "is_authorized", nullable = false)
-    private boolean isAuthorized;
+    @ManyToOne
+    @JoinColumn(name = "card_id", nullable = false)
+    private CreditCard creditCard;
+    @Column(name = "status", nullable = false)
+    private String status;
     @JoinColumn(name = "amount", nullable = false)
     private double transactionAmount;
     @JoinColumn(name = "timestamp", nullable = false)
